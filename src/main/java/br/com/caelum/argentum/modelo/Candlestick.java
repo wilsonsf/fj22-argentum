@@ -13,6 +13,7 @@ public final class Candlestick {
 	private final BigDecimal volume;
 	private final Calendar data;
 
+	@Deprecated
 	public Candlestick(double abertura, double fechamento, double minimo,
 			double maximo, double volume, Calendar data) {
 		this(BigDecimal.valueOf(abertura),
@@ -25,20 +26,26 @@ public final class Candlestick {
 
 	public Candlestick(BigDecimal abertura, BigDecimal fechamento, BigDecimal minimo,
 			BigDecimal maximo, BigDecimal volume, Calendar data) {
-		if (minimo.compareTo(maximo) > 0)
-			throw new IllegalArgumentException("minimo nao pode ser maior que maximo");
+		if (abertura == null || fechamento == null || minimo == null || maximo == null || volume == null || data == null)
+			throw new IllegalArgumentException("Não pode inicializar um Candlestick com valores nulos");
+
 		if (abertura.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("abertura nao pode ser negativo");
+
 		if (fechamento.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("fechamento nao pode ser negativo");
+
 		if (minimo.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("minimo nao pode ser negativo");
+
 		if (maximo.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("maximo nao pode ser negativo");
+
+		if (minimo.compareTo(maximo) > 0)
+			throw new IllegalArgumentException("minimo nao pode ser maior que maximo");
+
 		if (volume.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("volume nao pode ser negativo");
-		if (data == null)
-			throw new IllegalArgumentException("data nao pode ser nula");
 
 		this.abertura = abertura;
 		this.fechamento = fechamento;

@@ -16,7 +16,7 @@ public final class Negociacao {
 		if (data == null)
 			throw new IllegalArgumentException("data nao pode ser nula");
 		if (preco == null)
-			throw new IllegalArgumentException("preco deve ser informado");
+			throw new IllegalArgumentException("preco nao pode ser nulo");
 		else if (preco.compareTo(BigDecimal.ZERO) != 1)
 			throw new IllegalArgumentException("valor deve ser maior que 0");
 		if (quantidade <= 0)

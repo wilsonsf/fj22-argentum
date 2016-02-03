@@ -106,4 +106,19 @@ public class CandlestickFactoryTest {
 		assertEquals(45.0, candle.getMaximo().doubleValue(), 0.00001);
 		assertEquals(16760.0, candle.getVolume().doubleValue(), 0.00001);
 	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void deveDarErroAoCriarCandleComNegociacoesDeDatasDiferentes() {
+		Calendar hoje = Calendar.getInstance();
+
+		Negociacao negociacao1 = new Negociacao(40.5, 100, hoje);
+
+		List<Negociacao> negociacoes = Arrays.asList(negociacao1);
+
+		Calendar amanha = (Calendar) hoje.clone();
+		amanha.add(Calendar.DAY_OF_MONTH, 1);
+
+		CandlestickFactory fabrica = new CandlestickFactory();
+		fabrica.constroiCandleParaData(amanha, negociacoes);
+	}
 }
