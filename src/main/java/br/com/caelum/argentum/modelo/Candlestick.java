@@ -1,41 +1,44 @@
 package br.com.caelum.argentum.modelo;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 
 public final class Candlestick {
-	private final double abertura;
-	private final double fechamento;
-	private final double minimo;
-	private final double maximo;
-	private final double volume;
+	private final BigDecimal abertura;
+	private final BigDecimal fechamento;
+	private final BigDecimal minimo;
+	private final BigDecimal maximo;
+	private final BigDecimal volume;
 	private final Calendar data;
-	
+
 	public Candlestick(double abertura, double fechamento, double minimo,
 			double maximo, double volume, Calendar data) {
-		if (minimo > maximo) {
+		this(BigDecimal.valueOf(abertura),
+				BigDecimal.valueOf(fechamento),
+				BigDecimal.valueOf(minimo),
+				BigDecimal.valueOf(maximo),
+				BigDecimal.valueOf(volume),
+				data);
+	}
+
+	public Candlestick(BigDecimal abertura, BigDecimal fechamento, BigDecimal minimo,
+			BigDecimal maximo, BigDecimal volume, Calendar data) {
+		if (minimo.compareTo(maximo) > 0)
 			throw new IllegalArgumentException("minimo nao pode ser maior que maximo");
-		}
-		if (abertura < 0) {
+		if (abertura.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("abertura nao pode ser negativo");
-		}
-		if (fechamento< 0) {
+		if (fechamento.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("fechamento nao pode ser negativo");
-		}
-		if (minimo < 0) {
+		if (minimo.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("minimo nao pode ser negativo");
-		}
-		if (maximo < 0) {
+		if (maximo.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("maximo nao pode ser negativo");
-		}
-		if (volume < 0) {
+		if (volume.compareTo(BigDecimal.ZERO) < 0)
 			throw new IllegalArgumentException("volume nao pode ser negativo");
-		}
-		if (data == null) {
+		if (data == null)
 			throw new IllegalArgumentException("data nao pode ser nula");
-		}
-		
 
 		this.abertura = abertura;
 		this.fechamento = fechamento;
@@ -45,49 +48,48 @@ public final class Candlestick {
 		this.data = data;
 	}
 
-	public double getAbertura() {
+	public BigDecimal getAbertura() {
 		return abertura;
 	}
 
-	public double getFechamento() {
+	public BigDecimal getFechamento() {
 		return fechamento;
 	}
 
-	public double getMinimo() {
+	public BigDecimal getMinimo() {
 		return minimo;
 	}
 
-	public double getMaximo() {
+	public BigDecimal getMaximo() {
 		return maximo;
 	}
 
-	public double getVolume() {
+	public BigDecimal getVolume() {
 		return volume;
 	}
 
 	public Calendar getData() {
 		return data;
 	}
-	
+
 	public boolean isAlta() {
-		return this.abertura <= this.fechamento;
+		return abertura.compareTo(fechamento) != 1;
 	}
-	
+
 	public boolean isBaixa() {
-		return this.abertura > this.fechamento;
+		return abertura.compareTo(fechamento) < 0;
 	}
-	
+
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		String abertura = "Abertura " + this.abertura;
 		String fechamento = "Fechamento " + this.fechamento;
 		String minimo = "Mínima " + this.minimo;
 		String maximo = "Máxima " + this.maximo;
 		String volume = "Volume " + this.volume;
 		String data = "Data " + new SimpleDateFormat("dd/MM/yyyy").format(this.data.getTime());
-		
-		return Arrays.asList(abertura, fechamento, minimo, 
+
+		return Arrays.asList(abertura, fechamento, minimo,
 							maximo, volume, data).toString();
 	}
 }

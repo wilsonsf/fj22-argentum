@@ -1,22 +1,33 @@
 package br.com.caelum.argentum.modelo;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 public final class Negociacao {
-	private final double preco;
+	private final BigDecimal preco;
 	private final int quantidade;
 	private final Calendar data;
-	
+
 	public Negociacao(double preco, int quantidade, Calendar data) {
-		if (data == null) {
+		this(BigDecimal.valueOf(preco),quantidade,data);
+	}
+
+	public Negociacao(BigDecimal preco, int quantidade, Calendar data) {
+		if (data == null)
 			throw new IllegalArgumentException("data nao pode ser nula");
-		}
+		if (preco == null)
+			throw new IllegalArgumentException("preco deve ser informado");
+		else if (preco.compareTo(BigDecimal.ZERO) != 1)
+			throw new IllegalArgumentException("valor deve ser maior que 0");
+		if (quantidade <= 0)
+			throw new IllegalArgumentException("quantidade deve ser maior que 0");
+
 		this.preco = preco;
 		this.quantidade = quantidade;
 		this.data = data;
 	}
 
-	public double getPreco() {
+	public BigDecimal getPreco() {
 		return preco;
 	}
 
@@ -30,11 +41,11 @@ public final class Negociacao {
 		 * copia.setTimeInMillis(this.data.getTimeInMillis());
 		 * return copia;
 		 */
-		
-		return (Calendar) this.data.clone();
+
+		return (Calendar) data.clone();
 	}
-	
-	public double getVolume() {
-		return preco * quantidade;
+
+	public BigDecimal getVolume() {
+		return preco.multiply(BigDecimal.valueOf(quantidade));
 	}
 }
