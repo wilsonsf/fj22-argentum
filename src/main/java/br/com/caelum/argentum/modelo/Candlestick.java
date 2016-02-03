@@ -52,7 +52,7 @@ public final class Candlestick {
 		this.minimo = minimo;
 		this.maximo = maximo;
 		this.volume = volume;
-		this.data = data;
+		this.data = (Calendar) data.clone();
 	}
 
 	public BigDecimal getAbertura() {
@@ -76,7 +76,7 @@ public final class Candlestick {
 	}
 
 	public Calendar getData() {
-		return data;
+		return (Calendar) data.clone();
 	}
 
 	public boolean isAlta() {

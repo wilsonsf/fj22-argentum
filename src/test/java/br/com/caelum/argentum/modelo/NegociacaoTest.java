@@ -1,25 +1,37 @@
 package br.com.caelum.argentum.modelo;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
 public class NegociacaoTest {
 
 	@Test
+	public void naoDevePermitirMudarOPreco() {
+		Negociacao negociacao = new Negociacao(BigDecimal.TEN, 5, Calendar.getInstance());
+
+		BigDecimal preco = negociacao.getPreco();
+		preco = preco.add(BigDecimal.TEN);
+
+		assertTrue(negociacao.getPreco().equals(BigDecimal.TEN));
+	}
+
+	@Test
 	public void dataDaNegociacaoEhImutavel(){
-		//Se criar negocio no dia 15...
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.DAY_OF_MONTH, 15);
+		Calendar c = new GregorianCalendar(2015,Calendar.JANUARY, 10);
+
 		Negociacao n = new Negociacao(10,5,c);
 
-		// ainda que tente mudar para data 20...
 		n.getData().set(Calendar.DAY_OF_MONTH, 20);
+		assertEquals(10, n.getData().get(Calendar.DAY_OF_MONTH));
 
-		// ele continua no dia 15
-		assertEquals(15, n.getData().get(Calendar.DAY_OF_MONTH));
+		c.set(Calendar.YEAR, 2010);
+		assertEquals(2015, n.getData().get(Calendar.YEAR));
 	}
 
 	@Test(expected=IllegalArgumentException.class)

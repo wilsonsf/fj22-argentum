@@ -121,4 +121,5 @@ public class CandlestickFactoryTest {
 		CandlestickFactory fabrica = new CandlestickFactory();
 		fabrica.constroiCandleParaData(amanha, negociacoes);
 	}
+
 }

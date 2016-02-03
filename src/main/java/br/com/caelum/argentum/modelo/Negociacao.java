@@ -24,7 +24,7 @@ public final class Negociacao {
 
 		this.preco = preco;
 		this.quantidade = quantidade;
-		this.data = data;
+		this.data = (Calendar) data.clone();
 	}
 
 	public BigDecimal getPreco() {
