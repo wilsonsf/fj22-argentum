@@ -1,13 +1,16 @@
 package br.com.caelum.argentum.modelo;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public final class Negociacao {
+
 	private final BigDecimal preco;
 	private final int quantidade;
 	private final Calendar data;
 
+	@Deprecated
 	public Negociacao(double preco, int quantidade, Calendar data) {
 		this(BigDecimal.valueOf(preco),quantidade,data);
 	}
@@ -36,16 +39,19 @@ public final class Negociacao {
 	}
 
 	public Calendar getData() {
-		/*
-		 * Calendar copia = Calendar.getInstance();
-		 * copia.setTimeInMillis(this.data.getTimeInMillis());
-		 * return copia;
-		 */
-
 		return (Calendar) data.clone();
 	}
 
 	public BigDecimal getVolume() {
 		return preco.multiply(BigDecimal.valueOf(quantidade));
 	}
+
+	@Override
+	public String toString() {
+		return "Data: " + new SimpleDateFormat("dd/MM/yyyy").format(data.getTime()) + "\n"
+			+	"Quantidade: " + quantidade + "\n"
+			+	"Preço: " + preco + "\n"
+			+ 	"Volume: " + getVolume() + "\n";
+	}
+
 }
