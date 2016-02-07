@@ -60,6 +60,19 @@ public class NegociacaoTest {
 	}
 
 	@Test
+	public void comHorariosDiferentesEhDoMesmoDia() {
+		Calendar agora = Calendar.getInstance();
+		agora.set(2016, 2, 7, 14, 0);
+
+		Calendar algumasHorasDepois = (Calendar) agora.clone();
+		algumasHorasDepois.add(Calendar.HOUR, 5);
+
+		Negociacao negociacao = new Negociacao(BigDecimal.TEN, 5, agora);
+
+		assertTrue(negociacao.isMesmODia(algumasHorasDepois));
+	}
+
+	@Test
 	public void deveSaberSeUmaNegociacaoEhDaMesmaDataFornecida() {
 
 		Calendar agora = Calendar.getInstance();
