@@ -1,6 +1,7 @@
 package br.com.caelum.argentum.modelo;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
@@ -70,6 +71,16 @@ public class NegociacaoTest {
 		Negociacao negociacao = new Negociacao(BigDecimal.TEN, 5, agora);
 
 		assertTrue(negociacao.isMesmODia(algumasHorasDepois));
+	}
+
+	@Test
+	public void mesmoDiaMasMesesDiferentesNaoSaoDoMesmoDia() {
+		GregorianCalendar agora = new GregorianCalendar(2016,1,20);
+		GregorianCalendar mesSeguinte = new GregorianCalendar(2016,2,20);
+
+		Negociacao negociacao = new Negociacao(BigDecimal.TEN, 5, agora);
+
+		assertFalse(negociacao.isMesmODia(mesSeguinte));
 	}
 
 	@Test
