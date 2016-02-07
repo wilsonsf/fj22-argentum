@@ -54,4 +54,8 @@ public final class Negociacao {
 			+ 	"Volume: " + getVolume() + "\n";
 	}
 
+	public boolean isMesmODia(Calendar outraData) {
+		return data.equals(outraData);
+	}
+
 }

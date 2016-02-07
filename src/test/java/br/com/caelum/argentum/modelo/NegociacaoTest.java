@@ -25,7 +25,7 @@ public class NegociacaoTest {
 	public void dataDaNegociacaoEhImutavel(){
 		Calendar c = new GregorianCalendar(2015,Calendar.JANUARY, 10);
 
-		Negociacao n = new Negociacao(10,5,c);
+		Negociacao n = new Negociacao(BigDecimal.TEN,5,c);
 
 		n.getData().set(Calendar.DAY_OF_MONTH, 20);
 		assertEquals(10, n.getData().get(Calendar.DAY_OF_MONTH));
@@ -36,17 +36,38 @@ public class NegociacaoTest {
 
 	@Test(expected=IllegalArgumentException.class)
 	public void naoCriaNegociacaoComDataNula() {
-		new Negociacao(10,5,null);
+		new Negociacao(BigDecimal.TEN,5,null);
 	}
 
 	@Test(expected=IllegalArgumentException.class)
 	public void naoDevePermitirNegociacaoComValorMenorIgualAZero() {
-		new Negociacao(-5, 5, Calendar.getInstance());
+		new Negociacao(BigDecimal.valueOf(-5), 5, Calendar.getInstance());
 	}
 
 	@Test(expected=IllegalArgumentException.class)
 	public void naoDevePermitirQuantidadeComValorMenorIgualAZero() {
-		new Negociacao(5, -5, Calendar.getInstance());
+		new Negociacao(BigDecimal.valueOf(5), -5, Calendar.getInstance());
+	}
+
+	@Test
+	public void mesmoMilissegundoEhDoMesmoDia() {
+		Calendar agora = Calendar.getInstance();
+		Calendar mesmoMomento = (Calendar) agora.clone();
+
+		Negociacao negociacao = new Negociacao(BigDecimal.TEN, 5, agora);
+
+		assertTrue(negociacao.isMesmODia(mesmoMomento));
+	}
+
+	@Test
+	public void deveSaberSeUmaNegociacaoEhDaMesmaDataFornecida() {
+
+		Calendar agora = Calendar.getInstance();
+		Calendar mesmoMomento = (Calendar) agora.clone();
+
+		Negociacao negociacao = new Negociacao(BigDecimal.TEN, 5, agora);
+
+		assertTrue(negociacao.isMesmODia(mesmoMomento));
 	}
 
 }
