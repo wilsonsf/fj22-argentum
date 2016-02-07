@@ -84,6 +84,16 @@ public class NegociacaoTest {
 	}
 
 	@Test
+	public void mesmoDiaEMesMasAnosDiferentesNaoSaoDoMesmoDia() {
+		GregorianCalendar agora = new GregorianCalendar(2016,1,20);
+		GregorianCalendar anoSeguinte = new GregorianCalendar(2017,1,20);
+
+		Negociacao negociacao = new Negociacao(BigDecimal.TEN, 5, agora);
+
+		assertFalse(negociacao.isMesmODia(anoSeguinte));
+	}
+
+	@Test
 	public void deveSaberSeUmaNegociacaoEhDaMesmaDataFornecida() {
 
 		Calendar agora = Calendar.getInstance();
