@@ -158,7 +158,21 @@ public class CandlestickFactoryTest {
 		assertEquals(49.3, candles.get(1).getFechamento().doubleValue(), 0.00001);
 		assertEquals(51.8, candles.get(2).getAbertura().doubleValue(), 0.00001);
 		assertEquals(52.3, candles.get(2).getFechamento().doubleValue(), 0.00001);
+	}
 
+	@Test(expected=IllegalArgumentException.class)
+	public void naoPermiteConstruirCandlesComNegociacoesForaDeOrdem() {
+		Calendar hoje = Calendar.getInstance();
+		Negociacao negociacao1 = new Negociacao(BigDecimal.valueOf(40.5), 100, hoje);
+
+		Calendar amanha = (Calendar) hoje.clone();
+		amanha.add(Calendar.DATE, -1);
+		Negociacao negociacao2 = new Negociacao(BigDecimal.valueOf(48.8), 100, amanha);
+
+		List<Negociacao> negociacoes = Arrays.asList(negociacao1, negociacao2);
+
+		CandlestickFactory factory = new CandlestickFactory();
+		factory.constroiCandles(negociacoes);
 	}
 
 }
