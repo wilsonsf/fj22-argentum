@@ -47,6 +47,7 @@ public class CandlestickFactory {
 	public List<Candlestick> constroiCandles(List<Negociacao> todasNegociacoes) {
 		if (todasNegociacoes.isEmpty())
 			return Collections.emptyList();
+		Collections.sort(todasNegociacoes);
 
 		ArrayList<Candlestick> candles = new ArrayList<Candlestick>();
 

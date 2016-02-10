@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public final class Negociacao {
+public final class Negociacao implements Comparable<Negociacao> {
 
 	private final BigDecimal preco;
 	private final int quantidade;
@@ -57,6 +57,11 @@ public final class Negociacao {
 	public boolean isMesmODia(Calendar outraData) {
 		return 	data.get(Calendar.DAY_OF_YEAR) == outraData.get(Calendar.DAY_OF_YEAR) &&
 				data.get(Calendar.YEAR) == outraData.get(Calendar.YEAR);
+	}
+
+	@Override
+	public int compareTo(Negociacao outraNegociacao) {
+		return data.compareTo(outraNegociacao.data);
 	}
 
 }
