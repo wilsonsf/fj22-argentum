@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class CandlestickFactory {
@@ -47,7 +48,13 @@ public class CandlestickFactory {
 	public List<Candlestick> constroiCandles(List<Negociacao> todasNegociacoes) {
 		if (todasNegociacoes.isEmpty())
 			return Collections.emptyList();
-		Collections.sort(todasNegociacoes);
+
+		Collections.sort(todasNegociacoes, new Comparator<Negociacao>() {
+			@Override
+			public int compare(Negociacao o1, Negociacao o2) {
+				return o1.getData().compareTo(o2.getData());
+			}
+		});
 
 		ArrayList<Candlestick> candles = new ArrayList<Candlestick>();
 
